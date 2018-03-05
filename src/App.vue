@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <!--<img src="./assets/logo.png">-->
     <router-view/>
   </div>
@@ -20,4 +20,7 @@ export default {
   /*color: #2c3e50;*/
   /*margin-top: 60px;*/
 /*}*/
+  .app {
+    height: 100%;
+  }
 </style>

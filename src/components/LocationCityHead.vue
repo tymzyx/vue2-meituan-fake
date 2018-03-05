@@ -20,7 +20,7 @@
   .lc-head {
     width: 750px;
     height: 80px;
-    margin-top: 10px;
+    padding-top: 10px;
     line-height: 80px;
   }
   .close-icon {

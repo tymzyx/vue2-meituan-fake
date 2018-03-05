@@ -42,7 +42,7 @@
   .homeHead {
     width: 750px;
     height: 80px;
-    margin-top: 10px;
+    padding-top: 10px;
     /*background-color: yellow;*/
   }
   .homeContainer {
