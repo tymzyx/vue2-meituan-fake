@@ -1,8 +1,8 @@
 <template>
   <div class="lc-head">
     <i class="fa fa-close close-icon" @click="returnHome"></i>
-    <i class="fa fa-search search-icon"></i>
-    <input class="search" type="text" placeholder="城市名/拼音">
+    <i class="fa fa-search search-icon" @click="toSearch"></i>
+    <input class="search" type="text" placeholder="城市名/拼音" @click="toSearch">
   </div>
 </template>
 
@@ -11,6 +11,9 @@
     methods: {
       returnHome() {
         this.$router.push('/')
+      },
+      toSearch() {
+        this.$router.push('/searchCity')
       }
     }
   }
@@ -30,9 +33,11 @@
   .search-icon {
     position: relative;
     left: 110px;
+    z-index: 1;
   }
   .search {
-    margin-left: 56px;
+    position: relative;
+    left: 56px;
     background-color: #eeeeee;
     border: none;
     border-radius: 27px;
