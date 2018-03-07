@@ -1,40 +1,70 @@
 <template>
-  <div>
-    <mt-tabbar v-model="selected">
-      <mt-tab-item id="首页">
-        <img slot="icon" src="../assets/home.png">
-        首页
-      </mt-tab-item>
-      <mt-tab-item id="附近">
-        <img slot="icon" src="../assets/logo.png">
-        附近
-      </mt-tab-item>
-      <mt-tab-item id="发现">
-        <img slot="icon" src="../assets/logo.png">
-        发现
-      </mt-tab-item>
-      <mt-tab-item id="订单">
-        <img slot="icon" src="../assets/logo.png">
-        订单
-      </mt-tab-item>
-      <mt-tab-item id="我的">
-        <img slot="icon" src="../assets/logo.png">
-        我的
-      </mt-tab-item>
-    </mt-tabbar>
+  <div class="foot-wrapper">
+    <div v-for="item in footList" @click="changePage(item.url, item.key)">
+      <i :class="[item.icon, {isActive: item.key===activeKey}]"></i>
+      <span :class="{isActive: item.key===activeKey}">{{item.name}}</span>
+    </div>
   </div>
 </template>
 
 <script>
+  let footList = [
+    {key: '0', name: '首页', icon: 'iconfont icon-home', url: '/'},
+    {key: '1', name: '附近', icon: 'iconfont icon-Location', url: '/'},
+    {key: '2', name: '发现', icon: 'iconfont icon-find', url: '/'},
+    {key: '3', name: '订单', icon: 'iconfont icon-note', url: '/'},
+    {key: '4', name: '我的', icon: 'iconfont icon-peoplefill', url: '/'}
+  ]
+
   export default {
     data() {
       return {
-        selected: '首页'
+        activeKey: '0',
+        footList: footList
+      }
+    },
+    methods: {
+      changePage(url, key) {
+        this.activeKey = key
       }
     }
   }
 </script>
 
 <style lang="css" scoped>
-
+  .foot-wrapper {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 1;
+    background: #fff;
+    border-top: 1px solid #ccc;
+  }
+  .foot-wrapper div {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    color: #666;
+  }
+  .foot-wrapper i {
+    font-size: 40px;
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .foot-wrapper span {
+    font-size: 26px;
+    text-align: center;
+    position: absolute;
+    top: 72%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .isActive {
+    color: 	#3CB371;
+  }
 </style>

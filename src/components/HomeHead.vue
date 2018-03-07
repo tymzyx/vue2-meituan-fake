@@ -46,7 +46,11 @@
     width: 750px;
     height: 80px;
     padding-top: 10px;
-    /*background-color: yellow;*/
+    background-color: white;
+    position: absolute;
+    top: 0;
+    border-bottom: 1px solid #ccc;
+    z-index: 1;
   }
   .homeContainer {
     width: 100%;
