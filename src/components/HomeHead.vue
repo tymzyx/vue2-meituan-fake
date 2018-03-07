@@ -2,7 +2,7 @@
   <div class="homeHead">
     <div class="homeContainer">
       <i class="fa fa-sun-o weather-icon"></i>
-      <p class="city" @click="selectCity">{{locatingCity}}</p> <i class="fa fa-chevron-down" @click="selectCity"></i>
+      <p class="city" @click="selectCity">{{selectedCity}}</p> <i class="fa fa-chevron-down" @click="selectCity"></i>
       <i class="fa fa-search search-icon" @click="toSearch"></i>
       <input class="search" type="text" placeholder="搜索" @click="toSearch">
       <i class="fa fa-plus plus-icon"></i>
@@ -11,12 +11,13 @@
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex'
+
   const $ =require('jquery')
 
   export default {
     data() {
       return {
-        locatingCity: '',
       }
     },
     methods: {
@@ -25,15 +26,26 @@
       },
       toSearch() {
         this.$router.push('/searchMain')
-      }
+      },
+      ...mapMutations({
+        setCity: 'SET_CITY',
+        locatingCity: 'LOCATING_CITY'
+      })
     },
-    created() {
+    computed: {
+      ...mapState(['selectedCity'])
+    },
+    mounted() {
+      if (this.selectedCity !== '') {
+        return;
+      }
       let _this = this;
       $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js',
         function() {
           if (remote_ip_info.ret === 1) {
             let cityName = remote_ip_info.province;
-            _this.locatingCity = cityName;
+            _this.setCity(cityName);
+            _this.locatingCity(cityName);
           }
         }
       );

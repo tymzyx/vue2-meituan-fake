@@ -9,17 +9,19 @@
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="0">
           <div class="tab0-head">
-            <p>当前: 北京全城</p>
-            <p class="change-text">切换区县</p> <i class="fa fa-chevron-down change-text"></i>
+            <p>当前: {{selectedCity}}全城</p>
+            <p class="change-text" @click="triggerRegion">切换区县</p>
+            <i class="fa fa-chevron-down change-text" :class="{'fa-rotate-180': isRegion}" @click="triggerRegion"></i>
+          </div>
+          <div class="tab0-head-regions" v-show="isRegion">
+            <button v-for="i in 6">测试</button>
           </div>
           <div class="tab0-body-detail">
             <p>定位/最近访问</p>
-            <button><i class="fa fa-location-arrow"></i>北京</button>
-            <button>上海</button>
-            <button>长沙</button>
-            <button>张家界</button>
+            <button><i class="fa fa-location-arrow"></i>{{locatedCity}}</button>
+            <button v-for="c in recentCities">{{c}}</button>
             <p>热门城市</p>
-            <button v-for="city in hotCities">{{city.name}}</button>
+            <button v-for="city in hotCities" @click="selectCity(city.name)">{{city.name}}</button>
           </div>
           <div class="tab0-body-list">
             <index-list v-for="cityIndex in cityList" :index="cityIndex.index" :cities="cityIndex.cities"></index-list>
@@ -65,6 +67,8 @@
   // todo 城市搜索国际模块侧边栏高度问题
   import IndexList from './commons/IndexList'
 
+  import {mapState, mapMutations} from 'vuex'
+
   let fakeInfo = [
     {name: '推荐'},
     {
@@ -95,12 +99,12 @@
         selected: "0",
         hotCities: [
           {name: '北京'},
-          {name: '北京'},
-          {name: '北京'},
-          {name: '北京'},
-          {name: '北京'},
-          {name: '北京'},
-          {name: '北京'}
+          {name: '上海'},
+          {name: '石家庄'},
+          {name: '深圳'},
+          {name: '张家界'},
+          {name: '天津'},
+          {name: '广州'}
         ],
         cityList: [
           {
@@ -126,6 +130,18 @@
               {name: '北京'},
               {name: '北京'}
             ]
+          },
+          {
+            index: 'C',
+            cities: [
+              {name: '长沙'},
+              {name: '长沙'},
+              {name: '长沙'},
+              {name: '长沙'},
+              {name: '长沙'},
+              {name: '长沙'},
+              {name: '长沙'}
+            ]
           }
         ],
         internationalMenu: fakeInfo,
@@ -133,7 +149,11 @@
         isRecommend: true,
         internationalHot: [],
         internationalRegions: [],
+        isRegion: false
       }
+    },
+    computed: {
+      ...mapState(['selectedCity', 'locatedCity', 'recentCities'])
     },
     components: {IndexList},
     methods: {
@@ -151,7 +171,22 @@
           this.internationalRegions = nowInfo.regions;
         }
         this.activeKey = nowKey;
-      }
+      },
+      selectCity(city) {
+        this.updateRecentCity();
+        this.setCity(city);
+        this.$router.push('/');
+      },
+      triggerRegion() {
+        this.isRegion = !this.isRegion;
+      },
+      ...mapMutations({
+        setCity: 'SET_CITY',
+        updateRecentCity: 'UPDATE_RECENT_CITY'
+      })
+    },
+    mounted() {
+      this.isRegion = false;
     }
   }
 </script>
@@ -185,7 +220,7 @@
   }
   .change-text {
     position: relative;
-    left: 320px;
+    left: 400px;
     font-size: 26px;
     color: #888888;
   }
@@ -194,7 +229,7 @@
     border-bottom: 1px solid #cccccc;
     background-color: #eeeeee;
   }
-  .tab0-body-detail button,.tab1-wrapper button {
+  .tab0-head-regions button, .tab0-body-detail button, .tab1-wrapper button {
     width: 180px;
     height: 80px;
     margin-left: 46px;

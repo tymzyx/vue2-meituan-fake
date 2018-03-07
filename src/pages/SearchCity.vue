@@ -6,12 +6,14 @@
       <span @click="cancel">取消</span>
     </div>
     <div class="body-wrapper">
-      <div v-for="i in searchList" class="item"><span>{{i}}</span></div>
+      <div v-for="i in searchList" class="item" @click="selectCity(i)"><span>{{i}}</span></div>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
+
   const _ = require('lodash')
 
   let fakeDic = [
@@ -43,7 +45,7 @@
       cancel() {
         this.$router.push('/locationCities')
       },
-      getSearchRes: _.debounce(function () {
+      getSearchRes: _.debounce(function () {  // 根据输入框内容匹配结果，_.debounce控制判断频率
         let nowValue = this.searchValue;
         for (let i = 0; i < 15; i++) {
           this.$set(this.searchList, i, '');
@@ -67,7 +69,16 @@
             this.$set(this.searchList, i, '');
           }
         }
-      }, 500)
+      }, 500),
+      selectCity(city) {
+        this.updateRecentCity();
+        this.setCity(city);
+        this.$router.push('/');
+      },
+      ...mapMutations({
+        setCity: 'SET_CITY',
+        updateRecentCity: 'UPDATE_RECENT_CITY'
+      })
     }
   }
 </script>

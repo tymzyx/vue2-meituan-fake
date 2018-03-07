@@ -219,7 +219,7 @@
   }
   .sales {
     position: absolute;
-    bottom: 48px;
+    bottom: 50px;
     right: 20px;
   }
   .label {
