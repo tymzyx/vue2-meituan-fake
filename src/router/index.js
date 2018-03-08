@@ -5,7 +5,7 @@ import home from '../pages/home'
 import LocationCity from '../pages/LocationCity'
 import SearchCity from '../pages/SearchCity'
 import SearchMain from '../pages/SearchMain'
-import login from '../pages/login'
+import user from '../pages/user'
 
 Vue.use(Router)
 
@@ -17,9 +17,9 @@ export default new Router({
       component: home
     },
     {
-      path: '/login',
-      name: 'login',
-      component: login
+      path: '/user',
+      name: 'user',
+      component: user
     },
     {
       path: '/locationCities',
