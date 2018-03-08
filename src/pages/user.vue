@@ -6,7 +6,7 @@
       <i class="iconfont icon-sey-letter-a icon2"></i>
     </div>
     <div class="user-head">
-      <div class="user-profile">
+      <div class="user-profile" @click="toLogin">
         <div class="user-img"></div>
         <span>请点击登录</span>
       </div>
@@ -83,7 +83,12 @@
         serviceInfo: serviceInfo
       }
     },
-    components: {CommonFoot}
+    components: {CommonFoot},
+    methods: {
+      toLogin() {
+        this.$router.push('/login')
+      }
+    }
   }
 </script>
 

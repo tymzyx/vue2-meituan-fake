@@ -1,223 +1,119 @@
 <template>
-  <div class="login-wrapper">
-    <div class="login-top">
-      <i class="iconfont icon-set icon0"></i>
-      <i class="iconfont icon-palette icon1"></i>
-      <i class="iconfont icon-sey-letter-a icon2"></i>
-    </div>
+  <div>
     <div class="login-head">
-      <div class="login-profile">
-        <div class="login-img"></div>
-        <span>请点击登录</span>
-      </div>
-      <div class="login-head-top"></div>
-      <div class="login-head-bottom">
-        <div class="login-head-info">
-          <div v-for="item in headInfo" class="head-item">
-            <i :class="item.icon" :style="{color: item.color}"></i>
-            <span>{{item.name}}</span>
-          </div>
-        </div>
-      </div>
+      <i class="iconfont icon-close" @click="cancel"></i>
+      <h3>登录美团</h3>
+      <span>注册</span>
     </div>
     <div class="login-body">
-      <div class="wallet">
-        <p>美团钱包</p>
-        <div class="wallet-main">
-          <div v-for="item in walletInfo" class="service-item">
-            <i :class="item.icon"></i>
-            <span>{{item.name}}</span>
-          </div>
-        </div>
+      <div class="login-body-main">
+        <p>推荐登录方式</p>
+        <button class="weiChat"><i class="iconfont icon-weixin"></i> 微信登录</button>
+        <p>或</p>
+        <button class="phone">使用手机号登录注册</button>
+        <a>使用其他方式登录</a>
       </div>
-      <div class="service">
-        <p>美团服务</p>
-        <div class="service-main">
-          <div v-for="item in serviceInfo" class="wallet-item">
-            <i :class="item.icon" :style="{color: item.color}"></i>
-            <span>{{item.name}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="blank"></div>
     </div>
-    <common-foot activeKey="4"></common-foot>
+    <div class="login-foot">
+      <span>登录代表你已同意<a>《美团网用户协议》</a></span>
+    </div>
   </div>
 </template>
 
 <script>
-  import CommonFoot from '../components/CommonFoot'
-
-  let headInfo = [
-    {name: '收藏', icon: 'iconfont icon-shoucang', color: '#EE6A50'},
-    {name: '评价', icon: 'iconfont icon-pingjia', color: '#63B8FF'},
-    {name: '足迹', icon: 'iconfont icon-shizhong', color: '#48D1CC'}
-  ]
-
-  let walletInfo = [
-    {name: '我的钱包', icon: 'iconfont icon-wallet'},
-    {name: '红包/卡券', icon: 'iconfont icon-hongbao'},
-    {name: '银行卡', icon: 'iconfont icon-card'},
-    {name: '闪付', icon: 'iconfont icon-card-o'},
-    {name: '美团信用卡', icon: 'iconfont icon-pokercard'},
-    {name: '信用卡还款', icon: 'iconfont icon-yinhangka'},
-    {name: '银联二维码', icon: 'iconfont icon-erweima'}
-  ]
-
-  let serviceInfo = [
-    {name: '会员中心', icon: 'iconfont icon-icon_vip_fill', color: '#FF8C00'},
-    {name: '手机充值', icon: 'iconfont icon-chongzhi', color: '#FF8C00'},
-    {name: '客服中心', icon: 'iconfont icon-custom-service', color: '#48D1CC'},
-    {name: '好友去哪', icon: 'iconfont icon-dingwei1', color: '#48D1CC'},
-    {name: '免流用美团', icon: 'iconfont icon-sd-card', color: '#48D1CC'},
-    {name: '发票助手', icon: 'iconfont icon-fapiaoguanli', color: '#48D1CC'},
-    {name: '我要合作', icon: 'iconfont icon-lianjie-tianchong', color: '#48D1CC'},
-    {name: '关于美团', icon: 'iconfont icon-guanyuwomen', color: '#48D1CC'}
-  ]
-
   export default {
-    data() {
-      return {
-        walletInfo: walletInfo,
-        headInfo: headInfo,
-        serviceInfo: serviceInfo
+    methods: {
+      cancel() {
+        this.$router.push('/user')
       }
-    },
-    components: {CommonFoot}
+    }
   }
 </script>
 
 <style scoped>
-  .login-wrapper {
-    height: 100%;
-    box-sizing: border-box;
-    padding-top: 500px;
-  }
-  .login-top {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 100px;
-    background-color: rgba(56, 142, 142, 0.3);
-    z-index: 2;
-  }
-  .login-top i {
-    font-size: 50px;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-  }
-  .icon0 {
-    left: 40px;
-  }
-  .icon1 {
-    right: 150px;
-  }
-  .icon2 {
-    right: 40px;
-  }
   .login-head {
+    height: 112px;
+    border-bottom: 1px solid #bbb;
+    display: flex;
+    background: #eee;
     position: relative;
-    margin: -500px 0 0;
-  }
-  .login-profile {
-    position: absolute;
-    left: 296px;
-    top: 130px;
-    z-index: 1;
+    line-height: 112px;
+    padding: 0 20px;
     text-align: center;
-    font-size: 34px;
-    letter-spacing: 0.03em;
-    font-weight: bold;
+    justify-content: space-between;
   }
-  .login-img {
+  .login-head i, .login-head span {
     width: 100px;
-    height: 100px;
-    margin: auto;
-    border-radius: 50px;
-    background: url('../assets/t1.png');
-    background-size: contain;
+    color: #3CB371;
   }
-  .login-head-top{
-    height: 240px;
-    background: #388E8E;
+  .login-head h3 {
+    width: 200px;
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: 0.05em;
   }
-  .login-head-bottom {
-    height: 300px;
-    border-top-left-radius: 50% 40px;
-    border-top-right-radius: 50% 40px;
-    position: relative;
-    bottom: 40px;
-    background: #fff;
+  .login-body {
+    position: absolute;
+    top: 112px;
+    bottom: 80px;
+    width: 100%;
   }
-  .login-head-info {
+  .login-body-main {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+  }
+  .login-body-main p {
+    font-size: 28px;
+    color: #aaa;
+  }
+  .login-body-main a {
+    display: block;
+    margin-top: 80px;
+    font-size: 28px;
+    color: #3CB371;
+  }
+  .login-body-main button {
+    width: 600px;
+    height: 90px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 2px solid #dcdfe6;
+    border-radius: 8px;
+    padding: 6px 13px;
+    font-size: 30px;
+    outline: none;
+  }
+  .weiChat {
+    color: #fff;
+    background: green;
+    font-size: 40px;
+    letter-spacing: 0.1em;
+  }
+  .phone {
+    color: #888;
+    background: white;
+    font-size: 40px;
+    letter-spacing: 0.06em;
+  }
+  .login-foot {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 200px;
-    display: flex;
-  }
-  .head-item {
-    width: 33%;
-    position: relative;
+    height: 80px;
+    line-height: 80px;
     text-align: center;
+    font-size: 26px;
   }
-  .head-item i {
-    display: block;
-    font-size: 50px;
-    padding: 10% 0 10px 0;
-  }
-  .head-item span {
-    font-size: 28px;
-    color: black;
-  }
-  .login-body {
-    height: 100%;
-    position: relative;
-    top: -40px;
-    padding: 0 30px;
-  }
-  .wallet, .service {
-    height: 50%;
-    border-top: 1px solid #ccc;
-    position: relative;
-  }
-  .wallet p, .service p {
-    margin: 30px 0;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  .wallet-main, .service-main {
-    display: flex;
-    flex-wrap: wrap;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 88px;
-    bottom: 0;
-  }
-  .wallet-item, .service-item {
-    width: 25%;
-    position: relative;
-    text-align: center;
-    color: #FF8C00;
-  }
-  .wallet-item i, .service-item i {
-    display: block;
-    font-size: 50px;
-    padding: 10% 0 10px 0;
-  }
-  .wallet-item span, .service-item span {
-    font-size: 28px;
-    color: black;
-  }
-  .blank {
-    height: 100px;
+  .login-foot a {
+    text-decoration: underline;
+    color: #3CB371;
   }
 </style>
