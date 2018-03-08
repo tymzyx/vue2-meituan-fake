@@ -13,19 +13,20 @@
     {key: '1', name: '附近', icon: 'iconfont icon-Location', url: '/'},
     {key: '2', name: '发现', icon: 'iconfont icon-find', url: '/'},
     {key: '3', name: '订单', icon: 'iconfont icon-note', url: '/'},
-    {key: '4', name: '我的', icon: 'iconfont icon-peoplefill', url: '/'}
+    {key: '4', name: '我的', icon: 'iconfont icon-peoplefill', url: '/login'}
   ]
 
   export default {
     data() {
       return {
-        activeKey: '0',
         footList: footList
       }
     },
+    props: ['activeKey'],
     methods: {
       changePage(url, key) {
-        this.activeKey = key
+        this.activeKey = key;
+        this.$router.push(url);
       }
     }
   }

@@ -2,7 +2,7 @@
   <div>
     <home-head></home-head>
     <home-body></home-body>
-    <common-foot></common-foot>
+    <common-foot activeKey="0"></common-foot>
   </div>
 </template>
 
