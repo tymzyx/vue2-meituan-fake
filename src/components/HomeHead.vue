@@ -13,7 +13,21 @@
 <script>
   import {mapState, mapMutations} from 'vuex'
 
-  const $ =require('jquery')
+  const $ =require('jquery');
+
+  let weatherUrl = "https://free-api.heweather.com/s6/weather/now?parameters"
+  $.ajax({
+    url: weatherUrl,
+    dataType: "json",
+    type: "post",
+    data: {
+      location: '北京',
+      key: '6e2712c19f8d437bb4bd52548d0ffae3'
+    },
+    success: function(res) {
+      console.log('res: ', res);
+    }
+  });
 
   export default {
     data() {
