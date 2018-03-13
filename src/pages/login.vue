@@ -37,9 +37,10 @@
       </div>
       <div class="login-body-account">
         <div>
-          <input type="text" placeholder="请输入美团账号" />
-          <input type="password" placeholder="请输入密码" />
-          <button>登录</button>
+          <input type="text" v-model="username" placeholder="请输入美团账号" />
+          <input type="password" v-model="password" placeholder="请输入密码" />
+          <i class="iconfont icon-close-eye eyes"></i>
+          <button @click="accountLogin" :disabled="loginActive">登录</button>
           <span>忘记密码</span>
         </div>
       </div>
@@ -48,6 +49,9 @@
 </template>
 
 <script>
+  import {setCookie, getCookie} from '../assets/js/cookie'
+  import {mapMutations} from 'vuex'
+
   let otherLoginMethods = [
     {name: '微博', icon:'iconfont icon-weibo', color: 'red'},
     {name: 'QQ', icon:'iconfont icon-qq', color: 'blue'},
@@ -57,9 +61,16 @@
   export default {
     data() {
       return {
+        username: '',
+        password: '',
         otherLoginMethods: otherLoginMethods,
-        isOther: false,
-        isAccount: false
+        isOther: false, // 其他登录方式框
+        isAccount: false // 账号密码登录窗口
+      }
+    },
+    computed: {
+      loginActive() {
+        return !(this.username !== '' && this.password !== '');
       }
     },
     methods: {
@@ -74,7 +85,44 @@
           this.isOther = false;
           this.isAccount = true;
         }
-      }
+      },
+      accountLogin() {
+        let _this = this;
+        this.$http.post('http://localhost:7766/api/login', {
+          name: this.username,
+          password: this.password
+        })
+          .then(function (response) {
+            console.log(response);
+            let result = response.data;
+            if(result.success) {
+              setCookie('token', result.token, 1000*60*60);
+              _this.setUsername(_this.username);
+              _this.isAccount = false;
+              _this.$router.push('/user');
+            }
+          })
+          .catch(function (error) {
+            console.log('error: ', error);
+          });
+      },
+      ...mapMutations({
+        setUsername: 'SET_USERNAME',
+      })
+    },
+    mounted() {
+    //   let token = getCookie('token');
+    //   if (token) {
+    //     this.$http.post('http://localhost:7766/api/isLogin', {
+    //     token: token
+    //   })
+    //     .then(function (response) {
+    //       console.log(response);
+    //     })
+    //     .catch(function (error) {
+    //       console.log('error: ', error);
+    //     });
+    //   }
     }
   }
 </script>
@@ -111,8 +159,7 @@
   .login-body-account {
     background-color: #fff;
     position: absolute;
-    left: 0;
-    right: 0;
+    width: 750px;
     top: 112px;
     bottom: 0;
   }
@@ -138,6 +185,12 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     margin: 0 0 20px 0;
   }
+  .eyes {
+    position: absolute;
+    top: 110px;
+    right: 80px;
+    font-size: 44px;
+  }
   .login-body-account button {
     display: block;
     margin-top: 30px;
@@ -147,18 +200,22 @@
     cursor: pointer;
     box-sizing: border-box;
     border: 2px solid #dcdfe6;
+    background: #388E8E;
     border-radius: 8px;
     padding: 6px 13px;
     font-size: 30px;
     outline: none;
-    color: #999;
+    color: #eee;
+  }
+  .login-body-account button:disabled {
+    background: #ddd;
+    color: #bbb;
+    cursor: default;
   }
   .login-body-account span {
-    display: block;
-    position: relative;
-    left: 200px;
-    top: 20px;
+    padding: 30px 10px 0 0;
     color: #388E8E;
+    text-align: right;
   }
   .login-account {
     z-index: 20;

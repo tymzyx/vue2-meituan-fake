@@ -7,6 +7,8 @@ import SearchCity from '../pages/SearchCity'
 import SearchMain from '../pages/SearchMain'
 import user from '../pages/user'
 import login from '../pages/login'
+import edit from '../pages/userInfo/edit'
+import userInfo from '../pages/userInfo/index'
 
 Vue.use(Router)
 
@@ -39,8 +41,18 @@ export default new Router({
     },
     {
       path: '/searchMain',
-      name: '/searchMain',
+      name: 'searchMain',
       component: SearchMain
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: edit
+    },
+    {
+      path: '/userInfo',
+      name: 'userInfo',
+      component: userInfo
     }
   ]
 })

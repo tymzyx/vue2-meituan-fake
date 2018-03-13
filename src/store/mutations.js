@@ -21,6 +21,9 @@ const mutations = {
     if (cities.length > 2) {
       cities.pop();
     }
+  },
+  SET_USERNAME(state, name) {
+    state.username = name;
   }
 }
 

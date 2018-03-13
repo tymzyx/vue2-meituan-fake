@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+import axios from 'axios'
+Vue.prototype.$http = axios
+
 import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.css'
 import MintUI from 'mint-ui'

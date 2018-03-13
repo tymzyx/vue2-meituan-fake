@@ -1,6 +1,6 @@
 <template>
   <div class="foot-wrapper">
-    <div v-for="item in footList" @click="changePage(item.url, item.key)">
+    <div v-for="item in footList" @click="changePage(item.url)">
       <i :class="[item.icon, {isActive: item.key===activeKey}]"></i>
       <span :class="{isActive: item.key===activeKey}">{{item.name}}</span>
     </div>
@@ -24,8 +24,7 @@
     },
     props: ['activeKey'],
     methods: {
-      changePage(url, key) {
-        this.activeKey = key;
+      changePage(url) {
         this.$router.push(url);
       }
     }

@@ -1,14 +1,14 @@
 <template>
   <div class="user-wrapper">
     <div class="user-top">
-      <i class="iconfont icon-set icon0"></i>
+      <i class="iconfont icon-set icon0" @click="setClick"></i>
       <i class="iconfont icon-palette icon1"></i>
       <i class="iconfont icon-sey-letter-a icon2"></i>
     </div>
     <div class="user-head">
-      <div class="user-profile" @click="toLogin">
+      <div class="user-profile" @click="headClick">
         <div class="user-img"></div>
-        <span>请点击登录</span>
+        <span>{{username === '' ? '请点击登陆' : username}}</span>
       </div>
       <div class="user-head-top"></div>
       <div class="user-head-bottom">
@@ -47,6 +47,8 @@
 
 <script>
   import CommonFoot from '../components/CommonFoot'
+  import {getCookie} from '../assets/js/cookie'
+  import {mapState} from 'vuex'
 
   let headInfo = [
     {name: '收藏', icon: 'iconfont icon-shoucang', color: '#EE6A50'},
@@ -83,10 +85,22 @@
         serviceInfo: serviceInfo
       }
     },
+    computed: {
+      ...mapState(['username'])
+    },
     components: {CommonFoot},
     methods: {
-      toLogin() {
-        this.$router.push('/login')
+      headClick() {
+        if (this.username) {
+          this.$router.push('/userInfo');
+        } else {
+          this.$router.push('/login'); // 去登录页面
+        }
+      },
+      setClick() {
+        if (this.username) {
+          this.$router.push('/edit');
+        }
       }
     }
   }
