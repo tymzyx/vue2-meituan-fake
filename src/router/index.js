@@ -7,6 +7,8 @@ import SearchCity from '../pages/SearchCity'
 import SearchMain from '../pages/SearchMain'
 import user from '../pages/user'
 import nearby from '../pages/nearby'
+import discovery from '../pages/discovery'
+import order from '../pages/order/order'
 import login from '../pages/login'
 import edit from '../pages/userInfo/edit'
 import userInfo from '../pages/userInfo/index'
@@ -29,6 +31,16 @@ export default new Router({
       path: '/nearby',
       name: 'nearby',
       component: nearby
+    },
+    {
+      path: '/discovery',
+      name: 'discovery',
+      component: discovery
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: order
     },
     {
       path: '/login',

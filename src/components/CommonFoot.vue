@@ -11,8 +11,8 @@
   let footList = [
     {key: '0', name: '首页', icon: 'iconfont icon-home', url: '/'},
     {key: '1', name: '附近', icon: 'iconfont icon-Location', url: '/nearby'},
-    {key: '2', name: '发现', icon: 'iconfont icon-find', url: '/'},
-    {key: '3', name: '订单', icon: 'iconfont icon-note', url: '/'},
+    {key: '2', name: '发现', icon: 'iconfont icon-find', url: '/discovery'},
+    {key: '3', name: '订单', icon: 'iconfont icon-note', url: '/order'},
     {key: '4', name: '我的', icon: 'iconfont icon-peoplefill', url: '/user'}
   ]
 
