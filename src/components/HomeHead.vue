@@ -35,7 +35,8 @@
     '晴': 'iconfont icon-qing',
     '阴': 'iconfont icon-yin',
     '雪': 'iconfont icon-xue',
-    '云': 'iconfont icon-duoyun'
+    '云': 'iconfont icon-duoyun',
+    '雨': 'iconfont icon-yu'
   };
 
   let plusInfo = [
@@ -77,6 +78,7 @@
           },
           success: function(res) {
             let weatherState = res['HeWeather6'][0]['now']['cond_txt'];
+            // console.log('weatherState: ', weatherState);
             for (let state in weatherIcons) {
               let reg = new RegExp(state);
               if (reg.test(weatherState)) {

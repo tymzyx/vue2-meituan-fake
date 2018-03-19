@@ -14,7 +14,6 @@
   .tab-item-wrapper {
     height: 70px;
     color: #000;
-    background: aqua;
     flex: 1;
     line-height: 70px;
     text-align: center;

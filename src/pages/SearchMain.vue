@@ -50,7 +50,7 @@
     },
     methods: {
       cancel() {
-        this.$router.push('/')
+        window.history.back();
       }
     }
   }

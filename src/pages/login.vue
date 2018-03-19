@@ -75,7 +75,7 @@
     },
     methods: {
       cancel() {
-        this.$router.push('/user');
+        window.history.back();
       },
       selectOtherLogin() {
         this.isOther = true;
