@@ -1,3 +1,4 @@
+<!--item for user info-->
 <template>
   <div class="item">
     <div class="item-left">

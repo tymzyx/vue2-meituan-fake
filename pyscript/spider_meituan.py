@@ -99,16 +99,16 @@ def get_yaxin_waimai(headers):
             comment_info[comment_list[0]] = comment_list[1][1:-1]
         print store_base[1], rank, avg_time, base_price, send_price, sale_time, address, phone
         info.append({
-            'name': store_base[1],
-            'rank': rank,
-            'avg_time': avg_time,
-            'base_price': base_price,
-            'send_price': send_price,
-            'menu': menu,
-            'comment_info': comment_info,
-            'address': address,
-            'sale_time': sale_time,
-            'phone': phone
+            'name': store_base[1],            # 店铺名
+            'rank': rank,                     # 评分
+            'avg_time': avg_time,             # 平均送达时间
+            'base_price': base_price,         # 起送价
+            'send_price': send_price,         # 配送费
+            'menu': menu,                     # 菜单
+            'comment_info': comment_info,     # 评论信息
+            'address': address,               # 地址
+            'sale_time': sale_time,           # 营业时间
+            'phone': phone                    # 电话
         })
         time.sleep(15)
     with open('./store_data.json', 'w') as f:

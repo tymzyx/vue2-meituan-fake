@@ -21,6 +21,12 @@
         <tab-container-item id="2">
           <span>i am 2</span>
         </tab-container-item>
+        <tab-container-item id="3">
+          <span>i am 3</span>
+        </tab-container-item>
+        <tab-container-item id="4">
+          <span>i am 4</span>
+        </tab-container-item>
       </tab-container>
     </div>
     <common-foot activeKey="2"></common-foot>
