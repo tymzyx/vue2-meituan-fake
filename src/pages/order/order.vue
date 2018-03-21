@@ -12,6 +12,10 @@
           <button @click="$router.push('/login')">登录</button>
         </div>
       </div>
+
+      <div class="login-wrapper" v-if="false">
+
+      </div>
     </div>
     <common-foot activeKey="3"></common-foot>
   </div>
