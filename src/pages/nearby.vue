@@ -26,34 +26,7 @@
                 <button :class="{'selected-btn': index === 0}" >测试</button>
               </div>
             </div>
-            <div class="item-wrapper" v-for="i in 4">
-              <div class="item-top">
-                <div class="item-top-left"></div>
-                <div class="item-top-right">
-                  <div class="item-top-right-name">
-                    <h4>素虎净素餐厅（上地店）</h4>
-                  </div>
-                  <div class="item-top-right-rate">
-                    <rate count="4.5"></rate>
-                  </div>
-                  <div class="item-top-right-location">
-                    <span>素食|海淀区</span>
-                    <div class="location-distance">54m</div>
-                  </div>
-                  <div class="item-top-right-sales">
-                    <i class="iconfont icon-dianzan"></i>
-                    <p>174人消费</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item-bottom">
-                <div class="item-bottom-item">
-                  <i class="iconfont icon-icon-test"></i>
-                  <span>双人餐176元，4人餐296元起</span>
-                </div>
-              </div>
-              <div class="item-gap"></div>
-            </div>
+            <store-item v-for="item in stores" :itemInfo="item"></store-item>
             <div class="tab-bottom"></div>
           </tab-container-item>
           <tab-container-item id="1">
@@ -90,26 +63,29 @@
   import TabItem from '../components/commons/tab/TabItem'
   import TabContainer from '../components/commons/tab/TabContainer'
   import TabContainerItem from '../components/commons/tab/TabContainerItem'
-  import Rate from '../components/commons/rate'
+  import StoreItem from '../components/commons/StoreItem'
 
   export default {
     data() {
       return {
         selected: '0',
         isLocation: false,
+        stores: []
       }
     },
-    components: {CommonFoot, Navbar, TabItem, TabContainer, TabContainerItem, Rate},
+    components: {CommonFoot, Navbar, TabItem, TabContainer, TabContainerItem, StoreItem},
     methods: {
       toSearch() {
         this.$router.push('searchMain');
       }
     },
     mounted() {
-      this.$http.post('http://localhost:7766/api/store/findNearby', {
+      let _this = this;
+      this.$http.get('http://localhost:7766/api/store/findNearby', {
         })
         .then(function (response) {
           console.log('response: ', response);
+          _this.stores = response.data;
         })
         .catch(function (error) {
           console.log('error: ', error);
