@@ -209,7 +209,7 @@
   }
   .wallet p, .service p {
     margin: 30px 0;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
   }
   .wallet-main, .service-main {
@@ -218,22 +218,23 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 88px;
+    top: 80px;
     bottom: 0;
   }
   .wallet-item, .service-item {
     width: 25%;
+    height: 50%;
     position: relative;
     text-align: center;
     color: #FF8C00;
   }
   .wallet-item i, .service-item i {
     display: block;
-    font-size: 50px;
-    padding: 10% 0 10px 0;
+    font-size: 40px;
+    padding: 10px 0 10px 0;
   }
   .wallet-item span, .service-item span {
-    font-size: 28px;
+    font-size: 24px;
     color: black;
   }
   .blank {
