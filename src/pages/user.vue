@@ -100,6 +100,8 @@
       setClick() {
         if (this.username) {
           this.$router.push('/edit');
+        } else {
+          this.$router.push('/login'); // 去登录页面
         }
       }
     }
