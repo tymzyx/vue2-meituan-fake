@@ -34,6 +34,7 @@
     position: absolute;
     top: 0;
     background: #fff;
+    z-index: 5;
   }
   .head div {
     width: 250px;

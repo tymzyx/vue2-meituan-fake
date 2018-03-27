@@ -1,47 +1,94 @@
 <template>
   <div>
-    <div class="shade" v-show="isOther">
-    </div>
-    <div class="login-head">
-      <i class="iconfont icon-close" @click="cancel"></i>
-      <h3>登录美团</h3>
-      <span>注册</span>
-    </div>
-    <div class="login-body">
-      <div class="login-body-main">
-        <p>推荐登录方式</p>
-        <button class="weiChat"><i class="iconfont icon-weixin"></i> 微信登录</button>
-        <p>或</p>
-        <button class="phone">使用手机号登录注册</button>
-        <a @click="selectOtherLogin">使用其他方式登录</a>
+    <div v-if="false" class="login-wrapper">
+      <div class="shade" v-show="isOther">
       </div>
-    </div>
-    <div class="login-foot">
-      <span>登录代表你已同意<a>《美团网用户协议》</a></span>
-    </div>
-    <div class="other-login" v-show="isOther">
-      <div class="other-login-main">
-        <div v-for="item in otherLoginMethods" class="other-login-item" @click="toOtherLogin(item.name)">
-          <i :class="item.icon" :style="{color: item.color}"></i>
-          <span>{{item.name}}</span>
+      <div class="login-head">
+        <i class="iconfont icon-close" @click="cancel"></i>
+        <h3>登录美团</h3>
+        <span>注册</span>
+      </div>
+      <div class="login-body">
+        <div class="login-body-main">
+          <p>推荐登录方式</p>
+          <button class="weiChat"><i class="iconfont icon-weixin"></i> 微信登录</button>
+          <p>或</p>
+          <button class="phone">使用手机号登录注册</button>
+          <a @click="selectOtherLogin">使用其他方式登录</a>
         </div>
       </div>
-      <div class="other-login-cancel" @click="isOther = false;">取消</div>
+      <div class="login-foot">
+        <span>登录代表你已同意<a>《美团网用户协议》</a></span>
+      </div>
+      <div class="other-login" v-show="isOther">
+        <div class="other-login-main">
+          <div v-for="item in otherLoginMethods" class="other-login-item" @click="toOtherLogin(item.name)">
+            <i :class="item.icon" :style="{color: item.color}"></i>
+            <span>{{item.name}}</span>
+          </div>
+        </div>
+        <div class="other-login-cancel" @click="isOther = false;">取消</div>
+      </div>
+
+      <div class="login-account" v-show="isAccount">
+        <div class="login-head-account">
+          <i class="iconfont icon-left" @click="isAccount = false;"></i>
+          <h3>登录美团</h3>
+          <span></span>
+        </div>
+        <div class="login-body-account">
+          <div>
+            <input type="text" v-model="username" placeholder="请输入美团账号" />
+            <input type="password" v-model="password" placeholder="请输入密码" />
+            <i class="iconfont icon-close-eye eyes"></i>
+            <button @click="accountLogin" :disabled="loginActive">登录</button>
+            <span>忘记密码</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="login-account" v-show="isAccount">
-      <div class="login-head-account">
-        <i class="iconfont icon-left" @click="isAccount = false;"></i>
-        <h3>登录美团</h3>
-        <span></span>
+    <div v-else class="register-wrapper">
+      <my-head text="注册"></my-head>
+      <div class="register-step-head">
+        <div class="register-step" v-for="item in registerStep">
+          <span :class="{'step-active': item.index === stepActive}">{{item.text}}</span>
+          <i class="iconfont icon-right"></i>
+        </div>
       </div>
-      <div class="login-body-account">
+      <div class="register-step-main" v-if="this.stepActive === 0">
         <div>
-          <input type="text" v-model="username" placeholder="请输入美团账号" />
-          <input type="password" v-model="password" placeholder="请输入密码" />
-          <i class="iconfont icon-close-eye eyes"></i>
-          <button @click="accountLogin" :disabled="loginActive">登录</button>
-          <span>忘记密码</span>
+          <input type="text" placeholder="请输入您的手机号码" class="input-text" autofocus v-model="mobile">
+        </div>
+        <div class="register-statement">
+            <input type="radio" :checked="isAgree" @change="agree">
+            <span>我已审慎阅读并同意<a>《美团网用户协议》</a>、<a>《法律声明》</a>、<a>《隐私政策》</a>，
+            接受免除或限制责任、诉讼管辖约定等粗体提示条款</span>
+        </div>
+        <div class="btn-affirm">
+          <button :disabled="!btnEnable" :class="{'enabled-btn': btnEnable}" @click="step1To2">同意并注册</button>
+        </div>
+      </div>
+      <div class="register-step-main" v-if="this.stepActive === 1">
+        <div class="verify-tip">
+          <span>验证码短信已经发送至{{encryptMobile}}</span>
+        </div>
+        <div class="input-verify">
+          <input type="text" placeholder="请输入短信中的验证码" class="input-text" autofocus v-model="verifyCode">
+        </div>
+        <div class="btn-affirm">
+          <button class="enabled-btn" @click="stepActive = 2">提交验证码</button>
+        </div>
+      </div>
+      <div class="register-step-main" v-if="this.stepActive === 2">
+        <div class="input-password">
+          <input type="password" placeholder="密码" class="input-text" autofocus v-model="registerPassword">
+        </div>
+        <div class="input-password">
+          <input type="password" placeholder="确认密码" class="input-text" v-model="verifyPassword">
+        </div>
+        <div class="btn-affirm password-btn">
+          <button class="enabled-btn" @click="register">确认并提交密码</button>
         </div>
       </div>
     </div>
@@ -52,10 +99,20 @@
   import {setCookie, getCookie} from '../assets/js/cookie'
   import {mapMutations} from 'vuex'
 
+  import MyHead from '../components/commons/Head'
+
+  const _ = require('lodash');
+
   let otherLoginMethods = [
     {name: '微博', icon:'iconfont icon-weibo', color: 'red'},
     {name: 'QQ', icon:'iconfont icon-qq', color: 'blue'},
     {name: '账号密码', icon:'iconfont icon-lock', color: '#388E8E'}
+  ];
+
+  let registerStep = [
+    {text: '1.输入手机号', index: 0},
+    {text: '2.输入验证码', index: 1},
+    {text: '3.设置密码', index: 2}
   ];
 
   export default {
@@ -64,13 +121,30 @@
         username: '',
         password: '',
         otherLoginMethods: otherLoginMethods,
-        isOther: false, // 其他登录方式框
-        isAccount: false // 账号密码登录窗口
+        isOther: false,  // 其他登录方式框
+        isAccount: false,  // 账号密码登录窗口
+        registerStep: registerStep,  // 注册步骤信息
+        stepActive: 0,
+        isAgree: false,  // 是否同意注册条款
+        btnEnable: false,  // 按钮是否可操作
+        mobile: '',  // 手机号
+        verifyCode: '',  // 验证码
+        registerPassword: '',  // 注册密码
+        verifyPassword: '',  // 确认密码
       }
     },
     computed: {
       loginActive() {
         return !(this.username !== '' && this.password !== '');
+      },
+      encryptMobile() {
+        return this.mobile.substring(0, 3) + '****' + this.mobile.substring(5);
+      }
+    },
+    components: {MyHead},
+    watch: {
+      mobile() {
+        this.checkNextStep();
       }
     },
     methods: {
@@ -105,6 +179,45 @@
           .catch(function (error) {
             console.log('error: ', error);
           });
+      },
+      agree() {
+        this.isAgree = true;
+        this.checkNextStep();
+      },
+      checkNextStep: _.debounce(function () {
+        if (!this.isAgree) {
+          return;
+        }
+        let mobileNum = this.mobile;
+        let checkMobile = new RegExp('^1\\d{10}$');
+        if (checkMobile.test(mobileNum)) {
+          this.btnEnable = true;
+        } else {
+          this.btnEnable = false;
+        }
+      }),
+      step1To2() {
+        this.stepActive = 1;
+      },
+      register() {
+        if (this.registerPassword !== this.verifyPassword) {
+          console.log('两次密码不同！');
+          return;
+        }
+
+        let params = {
+          username: this.mobile,
+          mobile: this.mobile,
+          email: '',
+          password: this.verifyPassword
+        };
+
+        this.$http.post('http://localhost:7766/api/register', params)
+          .then(function (response) {
+          console.log('response: ', response);
+        }).catch(function (error) {
+          console.log('error: ', error);
+        });
       },
       ...mapMutations({
         setUsername: 'SET_USERNAME',
@@ -322,5 +435,101 @@
     right: 0;
     background-color: rgba(10, 10, 10, 0.2);
     z-index: 5;
+  }
+  .register-wrapper {
+    background: #eee;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .register-step-head {
+    background: #fff;
+    position: relative;
+    top: 112px;
+    display: flex;
+    height: 80px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+  .register-step {
+    flex: 1;
+    width: 250px;
+    font-size: 26px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 10px 0 20px;
+  }
+  .register-step i {
+    font-size: 24px;
+  }
+  .step-active {
+    color: #3CB371;
+  }
+  .register-step-main {
+    position: relative;
+    top: 132px;
+    display: flex;
+    flex-direction: column;
+  }
+  .input-text {
+    background-color: #fff;
+    border: none;
+    height: 70px;
+    width: 100%;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    box-sizing: border-box;
+    padding-left: 30px;
+  }
+  .register-statement {
+    display: flex;
+    font-size: 26px;
+    margin: 20px 10px 36px 10px;
+    color: #666;
+  }
+  .register-statement a {
+    text-decoration: underline;
+    color: #3CB371;
+  }
+  .btn-affirm {
+    text-align: center;
+  }
+  .btn-affirm button {
+    width: 700px;
+    height: 70px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 2px solid #dcdfe6;
+    border-radius: 8px;
+    padding: 6px 13px;
+    font-size: 30px;
+    outline: none;
+    color: #fff;
+    background: rgba(60, 179, 113, 0.7);
+  }
+  .enabled-btn {
+    background: #3CB371 !important;
+  }
+  .verify-tip {
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+    box-sizing: border-box;
+    color: #666;
+    text-align: center;
+  }
+  .input-verify {
+    margin: 20px 0;
+  }
+  .input-password {
+    margin: 10px 0;
+  }
+  .password-btn {
+    margin-top: 24px;
   }
 </style>

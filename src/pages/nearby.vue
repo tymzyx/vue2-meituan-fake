@@ -182,7 +182,7 @@
     background: #FF7256 !important;
   }
   .location-wrapper {
-    z-index: 10;
+    z-index: 101;
     background: #eee;
     position: fixed;
     width: 100%;
@@ -211,7 +211,7 @@
     color: #388E8E;
   }
   .location-head-top span {
-    font-size: 34px;
+    font-size: 32px;
     letter-spacing: 0.04em;
   }
   .location-head-bottom {
