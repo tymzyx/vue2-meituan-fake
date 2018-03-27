@@ -56,7 +56,7 @@
           <i class="iconfont icon-right"></i>
         </div>
       </div>
-      <div class="register-step-main" v-if="this.stepActive === 0">
+      <div class="register-step-main" v-if="stepActive === 0">
         <div>
           <input type="text" placeholder="请输入您的手机号码" class="input-text" autofocus v-model="mobile">
         </div>
@@ -69,7 +69,7 @@
           <button :disabled="!btnEnable" :class="{'enabled-btn': btnEnable}" @click="step1To2">同意并注册</button>
         </div>
       </div>
-      <div class="register-step-main" v-if="this.stepActive === 1">
+      <div class="register-step-main" v-if="stepActive === 1">
         <div class="verify-tip">
           <span>验证码短信已经发送至{{encryptMobile}}</span>
         </div>
@@ -77,10 +77,10 @@
           <input type="text" placeholder="请输入短信中的验证码" class="input-text" autofocus v-model="verifyCode">
         </div>
         <div class="btn-affirm">
-          <button class="enabled-btn" @click="stepActive = 2">提交验证码</button>
+          <button class="enabled-btn" @click="step2To3">提交验证码</button>
         </div>
       </div>
-      <div class="register-step-main" v-if="this.stepActive === 2">
+      <div class="register-step-main" v-if="stepActive === 2">
         <div class="input-password">
           <input type="password" placeholder="密码" class="input-text" autofocus v-model="registerPassword">
         </div>
@@ -92,6 +92,8 @@
         </div>
       </div>
     </div>
+
+    <dialog-box :dialog-text="dialogText" v-if="isDialog" @closeDialog="isDialog = false"></dialog-box>
   </div>
 </template>
 
@@ -100,6 +102,7 @@
   import {mapMutations} from 'vuex'
 
   import MyHead from '../components/commons/Head'
+  import DialogBox from '../components/commons/DialogBox'
 
   const _ = require('lodash');
 
@@ -131,6 +134,8 @@
         verifyCode: '',  // 验证码
         registerPassword: '',  // 注册密码
         verifyPassword: '',  // 确认密码
+        isDialog: false,  // 是否显示提示框
+        dialogText: '',
       }
     },
     computed: {
@@ -141,7 +146,7 @@
         return this.mobile.substring(0, 3) + '****' + this.mobile.substring(5);
       }
     },
-    components: {MyHead},
+    components: {MyHead, DialogBox},
     watch: {
       mobile() {
         this.checkNextStep();
@@ -199,9 +204,18 @@
       step1To2() {
         this.stepActive = 1;
       },
+      step2To3() {
+        if (this.verifyCode === '') {
+          this.isDialog = true;
+          this.dialogText = '验证码输入有误，请重新输入';
+          return;
+        }
+        this.stepActive = 2;
+      },
       register() {
         if (this.registerPassword !== this.verifyPassword) {
-          console.log('两次密码不同！');
+          this.isDialog = true;
+          this.dialogText = '验证码输入有误，请重新输入';
           return;
         }
 
@@ -211,10 +225,19 @@
           email: '',
           password: this.verifyPassword
         };
+        let _this = this;
 
         this.$http.post('http://localhost:7766/api/register', params)
           .then(function (response) {
-          console.log('response: ', response);
+          let result = response.data;
+          _this.dialogText = result.message;
+          _this.isDialog = true;
+          if (result.status) {
+            setTimeout(function() {
+              _this.isDialog = false;
+              window.history.back();
+            }.bind(_this), 1000)
+          }
         }).catch(function (error) {
           console.log('error: ', error);
         });
