@@ -6,7 +6,7 @@
       <span @click="cancel">取消</span>
     </div>
 
-    <div class="body-wrapper-default">
+    <div class="body-wrapper-default" v-if="!searchListFlag">
       <div class="hot">
         <div class="widget">
           <p>热门搜索</p>
@@ -22,19 +22,19 @@
       </div>
     </div>
 
-    <div class="body-wrapper-list">
-      <div v-for="i in searchList" class="item"><span>{{i}}</span></div>
+    <div class="body-wrapper-list" v-if="searchListFlag">
+      <div v-for="i in searchList" class="item"><span><i class="iconfont icon-search" v-if="i.name"></i>{{i.name}}</span></div>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
+  const _ = require('lodash');
+
   let fakeHot = ['万里长城', '水立方', 'BEJ48星梦剧院', '奥林匹克公园', '天安门']
   let fakeHistory = ['缘来赫赫小厨麻辣香锅', '金榜园', '黄记煌', '鲜果时刻']
-
-  let fakeDic = [
-    {},
-  ]
 
   export default {
     data() {
@@ -42,13 +42,51 @@
         hots: fakeHot,
         histories: fakeHistory,
         searchValue: '',
-        searchList: []
+        searchList: new Array(20),
+        searchListFlag: false,  // 是否显示搜索结果条目
       }
+    },
+    computed: {
+      ...mapState(['selectedCity'])
     },
     mounted() {
       document.getElementById('search').focus();
     },
+    watch: {
+      searchValue() {
+        this.getSearchRes();
+      }
+    },
     methods: {
+      getSearchRes: _.debounce(function () {  // 根据输入框内容匹配结果，_.debounce控制判断频率
+        let nowValue = this.searchValue;
+        for (let i = 0; i < 20; i++) {
+          this.$set(this.searchList, i, '');
+        }
+        if (nowValue === '') {
+          this.searchListFlag = false;
+          return;
+        }
+
+        let _this = this;
+
+        this.$http.get('http://localhost:7766/api/v1/searchPlace', {
+          params: {cityName: this.selectedCity, keyword: nowValue}
+        }).then(function (res) {
+          let result = res.data;
+          if (result.code === '0') {
+            throw new Error(result.name)
+          } else {
+            result.forEach((val, index) => {
+              _this.$set(_this.searchList, index, val);
+            });
+            _this.searchListFlag = true;
+          }
+        }).catch(function (error) {
+          console.log('error: ', error);
+        });
+
+      }, 500),
       cancel() {
         window.history.back();
       }
@@ -120,5 +158,36 @@
     padding: 6px 13px;
     font-size: 30px;
     outline: none;
+  }
+  .body-wrapper-list {
+    width: 100%;
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    border-top: 1px solid #bbb;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .item {
+    height: 6%;
+    width: 90%;
+    text-align: left;
+    font-size: 28px;
+    margin: auto;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+  .item span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+  }
+  .item i {
+    margin-right: 16px;
+    font-size: 28px;
   }
 </style>

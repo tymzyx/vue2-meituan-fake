@@ -14,7 +14,7 @@
 <script>
   import {mapMutations} from 'vuex'
 
-  const _ = require('lodash')
+  const _ = require('lodash');
 
   let fakeDic = [
     {value: '张家界', pinyin: 'zhangjiajie'},
@@ -23,7 +23,7 @@
     {value: '长沙', pinyin: 'changsha'},
     {value: '郑州', pinyin: 'zhengzhou'},
     {value: '北冰洋', pinyin: 'beibingyang'}
-  ]
+  ];
 
   export default {
     data() {

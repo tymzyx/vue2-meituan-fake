@@ -2,7 +2,7 @@
 export function setCookie(c_name, value, expire) {
     let date = new Date();
     date.setSeconds(date.getSeconds() + expire);
-    document.cookie = c_name + "=" + escape(value) + "; expires=" + date.toUTCString();
+    document.cookie = c_name + "=" + decodeURI(value) + "; expires=" + date.toUTCString();
     console.log(document.cookie);
 }
 
@@ -14,7 +14,7 @@ export function getCookie(c_name) {
             c_start = c_start + c_name.length + 1;
             let c_end = document.cookie.indexOf(";", c_start);
             if (c_end === -1) c_end = document.cookie.length;
-            return unescape(document.cookie.substring(c_start, c_end));
+            return decodeURIComponent(document.cookie.substring(c_start, c_end));
         }
     }
     return "";

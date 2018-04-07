@@ -7,13 +7,15 @@
     <div class="main-bottom">
       <item v-for="item in baseInfo" :brief="item.info" :name="item.name"></item>
     </div>
-    <button>退出账号</button>
+    <button @click="logout">退出账号</button>
   </div>
 </template>
 
 <script>
   import MyHead from '../../components/commons/Head'
   import Item from '../../components/commons/Item'
+  import {delCookie} from '../../assets/js/cookie'
+  import {mapMutations} from 'vuex'
 
   let editInfo = [
     {name: '个人信息', info: ''},
@@ -36,7 +38,17 @@
         editInfo: editInfo
       }
     },
-    components: {MyHead, Item}
+    components: {MyHead, Item},
+    methods: {
+      logout() {
+        this.setUsername('');
+        delCookie('token');
+        this.$router.push('/user');
+      },
+      ...mapMutations({
+        setUsername: 'SET_USERNAME',
+      })
+    }
   }
 </script>
 
@@ -75,6 +87,5 @@
     font-size: 28px;
     outline: none;
     color: #111;
-    cursor: pointer;
   }
 </style>
