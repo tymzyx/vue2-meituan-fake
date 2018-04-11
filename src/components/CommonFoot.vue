@@ -14,7 +14,7 @@
     {key: '2', name: '发现', icon: 'iconfont icon-find', url: '/discovery'},
     {key: '3', name: '订单', icon: 'iconfont icon-note', url: '/order'},
     {key: '4', name: '我的', icon: 'iconfont icon-peoplefill', url: '/user'}
-  ]
+  ];
 
   export default {
     data() {
