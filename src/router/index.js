@@ -12,6 +12,7 @@ import order from '../pages/order/order'
 import login from '../pages/login'
 import edit from '../pages/userInfo/edit'
 import userInfo from '../pages/userInfo/index'
+import trolley from '../pages/trolley/trolley'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router({
       path: '/userInfo',
       name: 'userInfo',
       component: userInfo
+    },
+    {
+      path: '/trolley',
+      name: 'trolley',
+      component: trolley
     }
   ]
 })

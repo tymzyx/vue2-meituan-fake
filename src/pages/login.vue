@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="false" class="login-wrapper">
+    <div v-if="true" class="login-wrapper">
       <div class="shade" v-show="isOther">
       </div>
       <div class="login-head">
@@ -378,7 +378,7 @@
     color: #aaa;
   }
   .login-body-main a {
-    display: block;
+    display: inline-block;
     margin-top: 80px;
     font-size: 28px;
     color: #3CB371;
