@@ -26,7 +26,7 @@
                 <button :class="{'selected-btn': index === 0}" >测试</button>
               </div>
             </div>
-            <store-item v-for="item in stores" :itemInfo="item"></store-item>
+            <store-item v-for="(item,index) in stores" :key="index" :itemInfo="item"></store-item>
             <div class="tab-bottom"></div>
           </tab-container-item>
           <tab-container-item id="1">

@@ -35,7 +35,7 @@
               最近订单
             </div>
             <div>
-              <order-item v-for="i in 3"></order-item>
+              <order-item v-for="i in 3" :key="i"></order-item>
             </div>
             <div class="recently-order-prompt">
               <span>查看全部</span>

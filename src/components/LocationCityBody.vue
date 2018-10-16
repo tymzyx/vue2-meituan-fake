@@ -24,7 +24,7 @@
             <button v-for="city in hotCities" @click="selectCity(city.name)">{{city.name}}</button>
           </div>
           <div class="tab0-body-list">
-            <index-list v-for="cityIndex in cityList" :index="cityIndex.index" :cities="cityIndex.cities"></index-list>
+            <index-list v-for="(cityIndex,index) in cityList" :key="index" :index="cityIndex.index" :cities="cityIndex.cities"></index-list>
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="1">

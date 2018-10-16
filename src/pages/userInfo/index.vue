@@ -12,7 +12,7 @@
           <i class="iconfont icon-left rotate"></i>
         </div>
       </div>
-      <item v-for="item in userInfo" :name="item.name" :brief="item.info">
+      <item v-for="(item,index) in userInfo" :key="index" :name="item.name" :brief="item.info">
       </item>
     </div>
   </div>

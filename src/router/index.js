@@ -13,6 +13,7 @@ import login from '../pages/login'
 import edit from '../pages/userInfo/edit'
 import userInfo from '../pages/userInfo/index'
 import trolley from '../pages/trolley/trolley'
+import testLoading from '../pages/testLoading'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/trolley',
       name: 'trolley',
       component: trolley
+    },
+    {
+      path: '/testLoading',
+      name: 'testLoading',
+      component: testLoading
     }
   ]
 })

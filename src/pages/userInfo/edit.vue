@@ -2,10 +2,10 @@
   <div class="wrapper">
     <my-head text="设置"></my-head>
     <div class="main-top">
-      <item v-for="item in editInfo" :brief="item.info" :name="item.name"></item>
+      <item v-for="(item,index) in editInfo" :key="index" :brief="item.info" :name="item.name"></item>
     </div>
     <div class="main-bottom">
-      <item v-for="item in baseInfo" :brief="item.info" :name="item.name"></item>
+      <item v-for="(item,index) in baseInfo" :key="index" :brief="item.info" :name="item.name"></item>
     </div>
     <button @click="logout">退出账号</button>
   </div>
